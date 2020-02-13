@@ -1,27 +1,16 @@
 {
   "decisions": {
-    "1164|hapi-swagger>handlebars": {
-      "madeAt": 0,
-      "decision": "fix"
+    "1468|blipp>@hapi/hoek": {
+      "decision": "fix",
+      "madeAt": 1581603174584
     },
-    "1164|nyc>istanbul-reports>handlebars": {
-      "madeAt": 0,
-      "decision": "fix"
+    "1468|blipp>@hapi/joi>@hapi/hoek": {
+      "decision": "fix",
+      "madeAt": 1581603174584
     },
-    "1316|nyc>istanbul-reports>handlebars": {
-      "decision": "ignore",
-      "madeAt": 1576158894516,
-      "expiresAt": 1578750858010
-    },
-    "1324|nyc>istanbul-reports>handlebars": {
-      "decision": "ignore",
-      "madeAt": 1576158894516,
-      "expiresAt": 1578750858010
-    },
-    "1325|nyc>istanbul-reports>handlebars": {
-      "decision": "ignore",
-      "madeAt": 1576158894516,
-      "expiresAt": 1578750858010
+    "1468|blipp>@hapi/joi>@hapi/topo>@hapi/hoek": {
+      "decision": "fix",
+      "madeAt": 1581603174584
     }
   },
   "rules": {},
