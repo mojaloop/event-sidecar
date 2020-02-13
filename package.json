@@ -22,7 +22,7 @@
             "test/unit/**/**.test.js"
         ],
         "ignoredByWatcher": [
-          "test/unit/**/**.test.js"
+            "test/unit/**/**.test.js"
         ]
     },
     "dependencies": {
@@ -62,8 +62,7 @@
     ],
     "scripts": {
         "start": "node src/index.js server --api",
-        "test": "npx ava test/unit/**/*.test.js",
-        "cover": "npx nyc --all report --reporter=lcov npm run test",
+        "test": "ava",
         "test:coverage": "nyc ava",
         "standard": "standard",
         "pre-commit": "1.2.2",
