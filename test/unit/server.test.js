@@ -132,3 +132,33 @@ setupTest.serial('initialize grpc server ', async test => {
   }
   eventHandlerStub.restore()
 })
+
+setupTest.serial('initialize grpc server without metadata', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await SetupProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      content: {
+        trace: {
+          spanId: 'test',
+          traceId: 'test',
+          tags: {
+            transactionAction: 'test',
+            transactionType: 'test',
+            tracestate: 'test'
+          }
+        }
+      }
+    })
+    // test.assert(eventHandlerStub.calledOnce, 'return server object')
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.error(`init failed with error - ${err}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})
