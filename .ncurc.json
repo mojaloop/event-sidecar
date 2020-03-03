@@ -1,5 +1,9 @@
 {
   "reject": [
-    "@hapi/inert"
+    "@hapi/hapi",
+    "@hapi/good",
+    "@hapi/inert",
+    "@hapi/vision",
+    "hapi-swagger"
   ]
 }
