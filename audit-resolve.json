@@ -1,18 +1,1 @@
-{
-  "decisions": {
-    "1468|blipp>@hapi/hoek": {
-      "decision": "fix",
-      "madeAt": 1581603174584
-    },
-    "1468|blipp>@hapi/joi>@hapi/hoek": {
-      "decision": "fix",
-      "madeAt": 1581603174584
-    },
-    "1468|blipp>@hapi/joi>@hapi/topo>@hapi/hoek": {
-      "decision": "fix",
-      "madeAt": 1581603174584
-    }
-  },
-  "rules": {},
-  "version": 1
-}
+{}
