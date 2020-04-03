@@ -42,6 +42,7 @@ let PathStub
 let ConfigStub
 let SetupProxy
 let eventSDKStub
+process.env.LOG_ENABLED = true
 
 setupTest.serial.beforeEach(() => {
   try {
