@@ -39,6 +39,8 @@ const openAPIOptions = {
   handlers: Path.resolve(__dirname, './handlers')
 }
 
+const LOG_ENABLED = process.env.LOG_ENABLED | false
+
 /**
  * @function createServer
  *
@@ -108,7 +110,31 @@ const createRPCServer = async () => {
     if (!eventMessage.metadata && eventMessage.content && eventMessage.content.trace && eventMessage.content) {
       eventMessage.metadata = eventMessage.content
     }
-    Logger.info(`Received Event :: service: ${eventMessage.metadata.trace.service} :: trancastionId: ${eventMessage.metadata.trace.tags.transactionId} :: type: ${eventMessage.metadata.trace.tags.transactionType} :: action: ${eventMessage.metadata.trace.tags.transactionAction} *** Span :: traceId: ${eventMessage.metadata.trace.traceId} :: spanId: ${eventMessage.metadata.trace.spanId} :: tracestate: ${eventMessage.metadata.trace.tags.tracestate}`)
+    if (LOG_ENABLED) {
+      let logOutput = 'Received Event :: '
+      if (eventMessage.metadata && eventMessage.metadata.trace && eventMessage.metadata.trace.service) {
+        logOutput += `service: ${eventMessage.metadata.trace.service} :: `
+      } if (eventMessage.metadata && eventMessage.metadata.trace && eventMessage.metadata.trace.tags) {
+        if (eventMessage.metadata.trace.tags.trancastionId) {
+          logOutput += `trancastionId: ${eventMessage.metadata.trace.tags.transactionId} :: `
+        }
+        if (eventMessage.metadata.trace.tags.transactionType) {
+          logOutput += `type: ${eventMessage.metadata.trace.tags.transactionType} :: `
+        }
+        if (eventMessage.metadata.trace.tags.transactionAction) {
+          logOutput += `action: ${eventMessage.metadata.trace.tags.transactionAction}`
+        }
+      } if (eventMessage.metadata && eventMessage.metadata.trace) {
+        if (eventMessage.metadata.trace.traceId) {
+          logOutput += `*** Span :: traceId: ${eventMessage.metadata.trace.traceId} :: `
+        } if (eventMessage.metadata.trace.spanId) {
+          logOutput += `spanId: ${eventMessage.metadata.trace.spanId} :: `
+        } if (eventMessage.method.trace.tags.tracestate) {
+          logOutput += `tracestate: ${eventMessage.metadata.trace.tags.tracestate}`
+        }
+      }
+      Logger.info(logOutput)
+    }
     await eventHandler.logEvent(eventMessage)
   })
   grpcServer.on('error', async (error) => {
