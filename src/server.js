@@ -39,7 +39,7 @@ const openAPIOptions = {
   handlers: Path.resolve(__dirname, './handlers')
 }
 
-const LOG_ENABLED = process.env.LOG_ENABLED | false
+const LOG_ENABLED = !!process.env.LOG_ENABLED | false
 
 /**
  * @function createServer
@@ -122,14 +122,14 @@ const createRPCServer = async () => {
           logOutput += `type: ${eventMessage.metadata.trace.tags.transactionType} :: `
         }
         if (eventMessage.metadata.trace.tags.transactionAction) {
-          logOutput += `action: ${eventMessage.metadata.trace.tags.transactionAction}`
+          logOutput += `action: ${eventMessage.metadata.trace.tags.transactionAction} `
         }
       } if (eventMessage.metadata && eventMessage.metadata.trace) {
         if (eventMessage.metadata.trace.traceId) {
           logOutput += `*** Span :: traceId: ${eventMessage.metadata.trace.traceId} :: `
         } if (eventMessage.metadata.trace.spanId) {
           logOutput += `spanId: ${eventMessage.metadata.trace.spanId} :: `
-        } if (eventMessage.method.trace.tags.tracestate) {
+        } if (eventMessage.metadata.trace.tags.tracestate) {
           logOutput += `tracestate: ${eventMessage.metadata.trace.tags.tracestate}`
         }
       }
