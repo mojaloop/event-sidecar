@@ -42,6 +42,7 @@ let PathStub
 let ConfigStub
 let SetupProxy
 let eventSDKStub
+process.env.LOG_ENABLED = true
 
 setupTest.serial.beforeEach(() => {
   try {
@@ -118,6 +119,175 @@ setupTest.serial('initialize grpc server ', async test => {
             transactionType: 'test',
             tracestate: 'test'
           }
+        }
+      }
+    })
+    // test.assert(eventHandlerStub.calledOnce, 'return server object')
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.error(`init failed with error - ${err}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})
+
+setupTest.serial('initialize grpc server without tracestate', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await SetupProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      metadata: {
+        trace: {
+          spanId: 'test',
+          traceId: 'test',
+          tags: {
+            transactionAction: 'test',
+            transactionType: 'test'
+          }
+        }
+      }
+    })
+    // test.assert(eventHandlerStub.calledOnce, 'return server object')
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.error(`init failed with error - ${err}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})
+
+setupTest.serial('initialize grpc server with missing transactionType tag', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await SetupProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      metadata: {
+        trace: {
+          spanId: 'test',
+          traceId: 'test',
+          tags: {
+            transactionAction: 'test',
+            tracestate: 'test'
+          }
+        }
+      }
+    })
+    // test.assert(eventHandlerStub.calledOnce, 'return server object')
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.error(`init failed with error - ${err}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})
+
+setupTest.serial('initialize grpc server with missing transactionAction tag', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await SetupProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      metadata: {
+        trace: {
+          spanId: 'test',
+          traceId: 'test',
+          tags: {
+            transactionType: 'test',
+            tracestate: 'test'
+          }
+        }
+      }
+    })
+    // test.assert(eventHandlerStub.calledOnce, 'return server object')
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.error(`init failed with error - ${err}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})
+
+setupTest.serial('initialize grpc server with missing spanId', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await SetupProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      metadata: {
+        trace: {
+          traceId: 'test',
+          tags: {
+            transactionType: 'test',
+            transactionAction: 'test',
+            tracestate: 'test'
+          }
+        }
+      }
+    })
+    // test.assert(eventHandlerStub.calledOnce, 'return server object')
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.error(`init failed with error - ${err}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})
+
+setupTest.serial('initialize grpc server with missing traceId', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await SetupProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      metadata: {
+        trace: {
+          spanId: 'test',
+          tags: {
+            transactionType: 'test',
+            transactionAction: 'test',
+            tracestate: 'test'
+          }
+        }
+      }
+    })
+    // test.assert(eventHandlerStub.calledOnce, 'return server object')
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.error(`init failed with error - ${err}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})
+
+setupTest.serial('initialize grpc server with missing trace', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await SetupProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      metadata: {
+        event: {
+          test: 'test'
         }
       }
     })
