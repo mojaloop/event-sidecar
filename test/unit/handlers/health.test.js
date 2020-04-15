@@ -43,7 +43,7 @@ Test.beforeEach(async () => {
     const initResult = await Server.initialize()
     server = initResult.server
   } catch (err) {
-    Logger.error(`setupTest failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`setupTest failed with error - ${err}`)
   }
 })
 

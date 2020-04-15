@@ -72,7 +72,7 @@ const generalTopicTemplate = (functionality) => {
   try {
     return Mustache.render(Config.KAFKA_CONFIG.TOPIC_TEMPLATES.GENERAL_TOPIC_TEMPLATE.TEMPLATE, { functionality })
   } catch (e) {
-    Logger.error(e)
+    Logger.isErrorEnabled && Logger.error(e)
     throw e
   }
 }
@@ -93,7 +93,7 @@ const transformGeneralTopicName = (functionality) => {
     }
     return generalTopicTemplate(functionality)
   } catch (e) {
-    Logger.error(e)
+    Logger.isErrorEnabled && Logger.error(e)
     throw e
   }
 }

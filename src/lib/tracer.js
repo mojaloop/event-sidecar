@@ -15,10 +15,10 @@
 //   let options = {
 //     logger: {
 //       info: function logInfo(msg) {
-//         Logger.info(msg)
+//         Logger.isInfoEnabled && Logger.info(msg)
 //       },
 //       error: function logError(msg) {
-//         Logger.error(msg)
+//         Logger.isErrorEnabled && Logger.error(msg)
 //       },
 //     }
 //   }

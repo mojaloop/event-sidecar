@@ -36,6 +36,7 @@ const Test = require('ava')
 const KafkaProducer = require('@mojaloop/central-services-stream').Kafka.Producer
 const Producer = require(`${src}/lib/kafka/producer`)
 const Uuid = require('uuid4')
+const Logger = require('@mojaloop/central-services-logger')
 
 const transfer = {
   transferId: 'b51ec534-ee48-4575-b6a9-ead2955b8999',
@@ -108,6 +109,15 @@ Test.serial.afterEach(() => {
 })
 
 Test.serial('return true', async test => {
+  const result = await Producer.produceMessage(messageProtocol, topicConf, config)
+  test.is(result, true)
+  await Producer.disconnect(topicConf.topicName)
+})
+
+Test.serial('return true with logger levels disabled', async test => {
+  sandbox.stub(Logger, 'isErrorEnabled').value(true)
+  sandbox.stub(Logger, 'isDebugEnabled').value(true)
+  sandbox.stub(Logger, 'isInfoEnabled').value(true)
   const result = await Producer.produceMessage(messageProtocol, topicConf, config)
   test.is(result, true)
   await Producer.disconnect(topicConf.topicName)

@@ -56,20 +56,20 @@ const produceMessage = async (messageProtocol, topicConf, config) => {
     if (listOfProducers[topicConf.topicName]) {
       producer = listOfProducers[topicConf.topicName]
     } else {
-      Logger.debug('Producer::start::topic=' + topicConf.topicName)
+      Logger.isDebugEnabled && Logger.debug('Producer::start::topic=' + topicConf.topicName)
       producer = new Producer(config)
-      Logger.info('Producer::connect::start')
+      Logger.isInfoEnabled && Logger.info('Producer::connect::start')
       await producer.connect()
-      Logger.info('Producer::connect::end')
+      Logger.isInfoEnabled && Logger.info('Producer::connect::end')
       listOfProducers[topicConf.topicName] = producer
     }
-    Logger.debug(`Producer.sendMessage::messageProtocol:'${JSON.stringify(messageProtocol)}'`)
+    Logger.isDebugEnabled && Logger.debug(`Producer.sendMessage::messageProtocol:'${JSON.stringify(messageProtocol)}'`)
     await producer.sendMessage(messageProtocol, topicConf)
-    Logger.debug('Producer::end')
+    Logger.isDebugEnabled && Logger.debug('Producer::end')
     return true
   } catch (e) {
-    Logger.error(e.stack)
-    Logger.info(`Producer error has occurred for ${topicConf.topicName}`)
+    Logger.isErrorEnabled && Logger.error(e.stack)
+    Logger.isInfoEnabled && Logger.info(`Producer error has occurred for ${topicConf.topicName}`)
     throw e
   }
 }
@@ -88,7 +88,7 @@ const disconnect = async (topicName = null) => {
     try {
       await getProducer(topicName).disconnect()
     } catch (e) {
-      Logger.error(e)
+      Logger.isErrorEnabled && Logger.error(e)
       throw e
     }
   } else if (topicName === null) {
