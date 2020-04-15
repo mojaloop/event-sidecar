@@ -38,7 +38,7 @@ setupTest.serial.beforeEach(async () => {
   try {
     sandbox = Sinon.createSandbox()
   } catch (err) {
-    Logger.error(`setupTest failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`setupTest failed with error - ${err}`)
   }
 })
 
@@ -65,7 +65,7 @@ setupTest.serial('handleRestRequest success', async test => {
     await eventHandlerProxy.handleRestRequest(payload)
     test.assert(produceGeneralMessageStub.calledOnce, 'return server object')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
 })

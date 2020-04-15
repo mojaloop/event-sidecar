@@ -97,7 +97,7 @@ Test.serial('test Event throws and error', async function (t) {
       type: 'onPreResponse',
       method: (request, h) => {
         if (!request.response.isBoom) {
-          Logger.info(request.response)
+          Logger.isInfoEnabled && Logger.info(request.response)
         } else {
           const error = request.response
           error.message = {

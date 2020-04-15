@@ -51,7 +51,7 @@ Test.serial('response should send info message to the serviceslogger', test => {
     response: { source: 'this is the response', statusCode: '200' }
   }
   RequestLogger.logResponse(request)
-  const args = Logger.info.firstCall.args
+  const args = Logger.isInfoEnabled && Logger.info.firstCall.args
   test.is(args[0], `Sidecar-Trace-Id=${request.headers.traceid} - Response: ${JSON.stringify(request.response.source)} Status: ${request.response.statusCode}`)
 })
 
@@ -60,7 +60,7 @@ Test.serial('response should not send info message to the serviceslogger', test 
     headers: { traceid: '123456' }
   }
   RequestLogger.logResponse(request)
-  test.falsy(Logger.info.called)
+  test.falsy(Logger.isInfoEnabled && Logger.info.called)
 })
 
 Test.serial('response should use util.inspect if JSON.stringify throws', test => {

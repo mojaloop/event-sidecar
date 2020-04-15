@@ -104,9 +104,9 @@ const createServer = async (port) => {
  */
 const createRPCServer = async () => {
   const grpcServer = new eventSDK.EventLoggingServiceServer(Config.EVENT_LOGGER_GRPC_HOST, Config.EVENT_LOGGER_GRPC_PORT)
-  Logger.info(`GRPC Server started at host: ${grpcServer.host}, port: ${grpcServer.port}`)
+  Logger.isInfoEnabled && Logger.info(`GRPC Server started at host: ${grpcServer.host}, port: ${grpcServer.port}`)
   grpcServer.on(eventSDK.EVENT_RECEIVED, async (eventMessage) => {
-    Logger.debug('Received eventMessage:', JSON.stringify(eventMessage, null, 2))
+    Logger.isDebugEnabled && Logger.debug('Received eventMessage:', JSON.stringify(eventMessage, null, 2))
     if (!eventMessage.metadata && eventMessage.content && eventMessage.content.trace && eventMessage.content) {
       eventMessage.metadata = eventMessage.content
     }
@@ -133,12 +133,12 @@ const createRPCServer = async () => {
           logOutput += `tracestate: ${eventMessage.metadata.trace.tags.tracestate}`
         }
       }
-      Logger.info(logOutput)
+      Logger.isInfoEnabled && Logger.info(logOutput)
     }
     await eventHandler.logEvent(eventMessage)
   })
   grpcServer.on('error', async (error) => {
-    Logger.error('Error', JSON.stringify(error, null, 2))
+    Logger.isErrorEnabled && Logger.error('Error', JSON.stringify(error, null, 2))
   })
   grpcServer.start()
   return grpcServer
@@ -148,7 +148,7 @@ const initialize = async (port = Config.PORT) => {
   const grpcServer = await createRPCServer()
   const server = await createServer(port)
   server.plugins.openapi.setHost(server.info.host + ':' + server.info.port)
-  Logger.info(`Server running on ${server.info.host}:${server.info.port}`)
+  Logger.isInfoEnabled && Logger.info(`Server running on ${server.info.host}:${server.info.port}`)
   return {
     server,
     grpcServer

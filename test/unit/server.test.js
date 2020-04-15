@@ -82,7 +82,7 @@ setupTest.serial.beforeEach(() => {
       '@mojaloop/event-sdk': eventSDKStub
     })
   } catch (err) {
-    Logger.error(`setupTest failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`setupTest failed with error - ${err}`)
   }
 })
 
@@ -99,7 +99,7 @@ setupTest.serial('initialize ', async test => {
     // test.assert(serverStub.start.calledOnce, 'server.start called once')
     // test.assert(serverStub.plugins.openapi.setHost.calledOnce, 'server.plugins.openapi.setHost called once')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
 })
@@ -128,7 +128,7 @@ setupTest.serial('initialize grpc server ', async test => {
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()
@@ -157,7 +157,7 @@ setupTest.serial('initialize grpc server without tracestate', async test => {
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()
@@ -186,7 +186,7 @@ setupTest.serial('initialize grpc server with missing transactionType tag', asyn
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()
@@ -215,7 +215,7 @@ setupTest.serial('initialize grpc server with missing transactionAction tag', as
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()
@@ -244,7 +244,7 @@ setupTest.serial('initialize grpc server with missing spanId', async test => {
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()
@@ -273,7 +273,7 @@ setupTest.serial('initialize grpc server with missing traceId', async test => {
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()
@@ -297,7 +297,7 @@ setupTest.serial('initialize grpc server with missing trace', async test => {
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()
@@ -327,7 +327,7 @@ setupTest.serial('initialize grpc server without metadata', async test => {
     // test.assert(HapiStub.Server.called, 'Hapi.Server called once')
     test.assert(grpcServer, 'return grpcServer')
   } catch (err) {
-    Logger.error(`init failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${err}`)
     test.fail()
   }
   eventHandlerStub.restore()

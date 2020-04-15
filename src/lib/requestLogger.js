@@ -37,9 +37,9 @@ const logResponse = function (request) {
       response = Util.inspect(request.response.source)
     }
     if (!response) {
-      Logger.info(`Sidecar-Trace-Id=${traceId} - Response: ${request.response}`)
+      Logger.isInfoEnabled && Logger.info(`Sidecar-Trace-Id=${traceId} - Response: ${request.response}`)
     } else {
-      Logger.info(`Sidecar-Trace-Id=${traceId} - Response: ${response} Status: ${request.response.statusCode}`)
+      Logger.isInfoEnabled && Logger.info(`Sidecar-Trace-Id=${traceId} - Response: ${response} Status: ${request.response.statusCode}`)
     }
   }
 }
