@@ -2,23 +2,23 @@
   "decisions": {
     "1179|@mojaloop/event-sdk>grpc>node-pre-gyp>mkdirp>minimist": {
       "decision": "ignore",
-      "madeAt": 1586934837037,
-      "expiresAt": 1587539624727
+      "madeAt": 1588601354621,
+      "expiresAt": 1589206139405
     },
     "1179|@mojaloop/event-sdk>grpc>node-pre-gyp>tar>mkdirp>minimist": {
       "decision": "ignore",
-      "madeAt": 1586934837037,
-      "expiresAt": 1587539624727
+      "madeAt": 1588601354621,
+      "expiresAt": 1589206139405
     },
     "1179|@mojaloop/event-sdk>grpc>node-pre-gyp>rc>minimist": {
       "decision": "ignore",
-      "madeAt": 1586934837037,
-      "expiresAt": 1587539624727
+      "madeAt": 1588601354622,
+      "expiresAt": 1589206139405
     },
     "1179|hapi-swagger>handlebars>optimist>minimist": {
       "decision": "ignore",
-      "madeAt": 1586934832526,
-      "expiresAt": 1587539624727
+      "madeAt": 1588601346574,
+      "expiresAt": 1589206139405
     },
     "1179|npm-check-updates>pacote>cacache>move-concurrently>copy-concurrently>mkdirp>minimist": {
       "decision": "ignore",
@@ -59,6 +59,21 @@
       "decision": "ignore",
       "madeAt": 1584583100701,
       "expiresAt": 1585187887338
+    },
+    "1500|npm-audit-resolver>yargs-parser": {
+      "decision": "ignore",
+      "madeAt": 1588601349385,
+      "expiresAt": 1589206139405
+    },
+    "1500|npm-audit-resolver>yargs-unparser>yargs>yargs-parser": {
+      "decision": "ignore",
+      "madeAt": 1588601352040,
+      "expiresAt": 1589206139405
+    },
+    "1500|npm-audit-resolver>audit-resolve-core>yargs-parser": {
+      "decision": "ignore",
+      "madeAt": 1588601357860,
+      "expiresAt": 1589206139405
     }
   },
   "rules": {},
