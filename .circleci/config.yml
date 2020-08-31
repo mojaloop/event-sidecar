@@ -78,7 +78,7 @@ jobs:
           name: Delete build dependencies
           command: apk del build-dependencies
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
@@ -91,7 +91,7 @@ jobs:
           command: *defaults_Dependencies
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package.json" }}
+            - dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Install ava tap tap-xunit
           command: npm install -g ava tap tap-xunit
@@ -119,7 +119,7 @@ jobs:
           command: *defaults_awsCliDependencies
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package.json" }}
+            - dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Execute code coverage check
           command: npm -s run test:coverage
@@ -147,7 +147,7 @@ jobs:
           name: Install general dependencies
           command: *defaults_Dependencies
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Create dir for test results
           command: mkdir -p ./audit/results
@@ -168,7 +168,7 @@ jobs:
       - run:
           <<: *defaults_license_scanner
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Prune non-production packages before running license-scanner
           command: npm prune --production
