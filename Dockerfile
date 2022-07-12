@@ -1,32 +1,37 @@
-FROM node:12.16.1-alpine as builder
-WORKDIR /opt/event-sidecar
+FROM node:16.15.0-alpine as builder
+WORKDIR /opt/app
 
-RUN apk add --no-cache -t build-dependencies git make gcc g++ python libtool autoconf automake \
+RUN apk --no-cache add git
+RUN apk add --no-cache -t build-dependencies make gcc g++ python3 libtool libressl-dev openssl-dev autoconf automake \
     && cd $(npm root -g)/npm \
     && npm config set unsafe-perm true \
     && npm install -g node-gyp
 
-COPY package.json package-lock.json* /opt/event-sidecar/
-RUN npm install
+COPY package.json package-lock.json* /opt/app/
 
-RUN apk del build-dependencies
+RUN npm ci
 
-COPY config /opt/event-sidecar/config
-COPY src /opt/event-sidecar/src
-
-FROM node:12.16.1-alpine
-WORKDIR /opt/event-sidecar
+FROM node:16.15.0-alpine
+WORKDIR /opt/app
 
 # Create empty log file & link stdout to the application log file
 RUN mkdir ./logs && touch ./logs/combined.log
 RUN ln -sf /dev/stdout ./logs/combined.log
 
+RUN npm prune --production
+
 # Create a non-root user: ml-user
 RUN adduser -D ml-user 
+
+# Copy over filesfrom builder
+COPY --chown=ml-user --from=builder /opt/app .
+
+# Set non-root user
 USER ml-user
 
-COPY --chown=ml-user --from=builder /opt/event-sidecar .
-RUN npm prune --production
+# Copy actual code
+COPY config /opt/app/config
+COPY src /opt/app/src
 
 EXPOSE 4001
 CMD ["npm", "run", "start"]

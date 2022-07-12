@@ -220,7 +220,7 @@ Test.serial('throw error if failure to disconnect from kafka when disconnecting 
 Test.serial('throw error if failure to disconnect from kafka if topic does not exist', async test => {
   try {
     const topicName = 'someTopic'
-    await Producer.produceMessage({}, { topicName: topicName }, {})
+    await Producer.produceMessage({}, { topicName }, {})
     await Producer.disconnect('undefined')
   } catch (e) {
     test.pass(e instanceof Error)
