@@ -9,7 +9,7 @@ RUN apk add --no-cache -t build-dependencies make gcc g++ python3 libtool libres
 
 COPY package.json package-lock.json* /opt/app/
 
-RUN npm ci
+RUN npm ci --production
 
 FROM node:16.15.0-alpine
 WORKDIR /opt/app
@@ -17,8 +17,6 @@ WORKDIR /opt/app
 # Create empty log file & link stdout to the application log file
 RUN mkdir ./logs && touch ./logs/combined.log
 RUN ln -sf /dev/stdout ./logs/combined.log
-
-RUN npm prune --production
 
 # Create a non-root user: ml-user
 RUN adduser -D ml-user 
