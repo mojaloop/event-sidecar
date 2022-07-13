@@ -30,7 +30,8 @@
         "start": "node src/index.js server --api",
         "test": "npm run test:unit",
         "test:unit": "ava",
-        "test:coverage": "nyc ava",
+        "test:xunit": "npm run test:unit -- --tap | tap-xunit > ./test/results/xunit.xml",
+        "test:coverage-check": "nyc ava",
         "standard": "npx standard",
         "standard:fix": "npx standard --fix",
         "lint": "npm run standard",
@@ -72,7 +73,9 @@
         "sinon": "14.0.0",
         "standard": "17.0.0",
         "standard-version": "^9.5.0",
-        "swagmock": "1.0.0"
+        "swagmock": "1.0.0",
+        "tap-spec": "^5.0.0",
+        "tap-xunit": "^2.4.1"
     },
     "ava": {
         "files": [
@@ -87,7 +90,7 @@
     },
     "standard-version": {
         "scripts": {
-        "postchangelog": "replace '\\[mojaloop/#(\\d+)\\]\\(https://github.com/mojaloop/(.*)/issues/(\\d+)\\)' '[mojaloop/#$1](https://github.com/mojaloop/project/issues/$1)' CHANGELOG.md"
+            "postchangelog": "replace '\\[mojaloop/#(\\d+)\\]\\(https://github.com/mojaloop/(.*)/issues/(\\d+)\\)' '[mojaloop/#$1](https://github.com/mojaloop/project/issues/$1)' CHANGELOG.md"
+        }
     }
-  }
 }
