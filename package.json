@@ -29,7 +29,7 @@
     "scripts": {
         "start": "node src/index.js server --api",
         "test": "npm run test:unit",
-        "test:unit": "ava",
+        "test:unit": "npx ava --no-worker-threads --serial",
         "test:xunit": "npm run test:unit -- --tap | tap-xunit > ./test/results/xunit.xml",
         "test:coverage-check": "nyc ava",
         "standard": "npx standard",
@@ -63,7 +63,8 @@
         "uuid4": "2.0.2"
     },
     "devDependencies": {
-        "ava": "3.7.0",
+        "@ava/typescript": "^3.0.1",
+        "ava": "4.3.1",
         "get-port": "5.1.1",
         "npm-audit-resolver": "3.0.0-7",
         "npm-check-updates": "15.2.6",

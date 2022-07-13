@@ -138,7 +138,7 @@ const createRPCServer = async () => {
     await eventHandler.logEvent(eventMessage)
   })
   grpcServer.on('error', async (error) => {
-    Logger.isErrorEnabled && Logger.error('Error', JSON.stringify(error, null, 2))
+    Logger.isErrorEnabled && Logger.error('grpcServer.onError - error: ', JSON.stringify(error, null, 2))
   })
   grpcServer.start()
   return grpcServer
