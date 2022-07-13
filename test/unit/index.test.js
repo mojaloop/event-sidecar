@@ -75,7 +75,6 @@ Test('Commander should exit with invalid arg', async test => {
   test.pass(process.exit.called)
 })
 
-
 Test('Commander should exit with no args', async test => {
   // stub process.exit
   sandbox.stub(process, 'exit')
