@@ -31,7 +31,7 @@
         "test": "npm run test:unit",
         "test:unit": "npx ava --no-worker-threads --serial",
         "test:xunit": "npm run test:unit -- --tap | tap-xunit > ./test/results/xunit.xml",
-        "test:coverage-check": "nyc ava",
+        "test:coverage-check": "nyc ava --no-worker-threads --serial",
         "standard": "npx standard",
         "standard:fix": "npx standard --fix",
         "lint": "npm run standard",
