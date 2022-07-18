@@ -1,7 +1,7 @@
 {
     "name": "event-sidecar",
     "description": "Event Sidecar is used to route an event to Kafka",
-    "version": "11.0.1",
+    "version": "12.0.0-snapshot.6",
     "author": "ModusBox",
     "contributors": [
         "Rajiv Mothilal <rajiv.mothilal@modusbox.com>",
@@ -17,6 +17,69 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org"
     },
+    "engines": {
+        "node": "=16.x"
+    },
+    "main": "./src/server",
+    "pre-commit": [
+        "dep:check",
+        "lint",
+        "test"
+    ],
+    "scripts": {
+        "start": "node src/index.js server --api",
+        "test": "npm run test:unit",
+        "test:unit": "npx ava --no-worker-threads --serial",
+        "test:xunit": "npm run test:unit -- --tap | tap-xunit > ./test/results/xunit.xml",
+        "test:coverage-check": "nyc ava --no-worker-threads --serial",
+        "standard": "npx standard",
+        "standard:fix": "npx standard --fix",
+        "lint": "npm run standard",
+        "lint:fix": "npm run standard:fix",
+        "regenerate": "yo swaggerize:test --framework hapi --apiPath './src/interface/swagger.json'",
+        "dep:check": "npx ncu -e 2",
+        "dep:update": "npx ncu -u",
+        "audit:resolve": "resolve-audit --production",
+        "audit:check": "check-audit --production",
+        "release": "npx standard-version --no-verify --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]'",
+        "snapshot": "npx standard-version --no-verify --skip.changelog --prerelease snapshot --releaseCommitMessageFormat 'chore(snapshot): {{currentTag}}'"
+    },
+    "dependencies": {
+        "@hapi/address": "4.1.0",
+        "@hapi/boom": "10.0.0",
+        "@hapi/good": "9.0.1",
+        "@hapi/hapi": "20.2.2",
+        "@hapi/inert": "7.0.0",
+        "@hapi/vision": "7.0.0",
+        "@mojaloop/central-services-logger": "11.0.1",
+        "@mojaloop/central-services-metrics": "12.0.5",
+        "@mojaloop/central-services-stream": "11.0.0",
+        "@mojaloop/event-sdk": "11.0.2",
+        "blipp": "4.0.2",
+        "glob": "8.0.3",
+        "hapi-openapi": "3.0.0",
+        "hapi-swagger": "14.5.5",
+        "mustache": "4.2.0",
+        "uuid4": "2.0.2"
+    },
+    "devDependencies": {
+        "@ava/typescript": "^3.0.1",
+        "ava": "4.3.1",
+        "get-port": "5.1.1",
+        "npm-audit-resolver": "3.0.0-7",
+        "npm-check-updates": "15.3.4",
+        "nyc": "15.1.0",
+        "pre-commit": "1.2.2",
+        "proxyquire": "2.1.3",
+        "replace": "^1.2.1",
+        "rewire": "6.0.0",
+        "sinon": "14.0.0",
+        "standard": "17.0.0",
+        "standard-version": "^9.5.0",
+        "swagmock": "1.0.0",
+        "tap-spec": "^5.0.0",
+        "tap-xunit": "^2.4.1"
+    },
     "ava": {
         "files": [
             "test/unit/**/**.test.js"
@@ -25,58 +88,12 @@
             "test/unit/**/**.test.js"
         ]
     },
-    "dependencies": {
-        "@hapi/address": "4.1.0",
-        "@hapi/boom": "9.1.2",
-        "@hapi/good": "8.2.4",
-        "@hapi/hapi": "18.4.1",
-        "@hapi/inert": "5.2.2",
-        "@hapi/vision": "5.5.4",
-        "@mojaloop/central-services-logger": "10.6.1",
-        "@mojaloop/central-services-metrics": "11.0.0",
-        "@mojaloop/central-services-stream": "10.7.0",
-        "@mojaloop/event-sdk": "10.7.1",
-        "blipp": "4.0.2",
-        "glob": "7.1.7",
-        "hapi-openapi": "1.2.6",
-        "hapi-swagger": "11.1.0",
-        "mustache": "4.2.0",
-        "uuid4": "2.0.2"
-    },
-    "devDependencies": {
-        "ava": "3.7.0",
-        "get-port": "5.1.1",
-        "npm-audit-resolver": "2.3.1",
-        "npm-check-updates": "11.7.1",
-        "nyc": "15.1.0",
-        "proxyquire": "2.1.3",
-        "rewire": "5.0.0",
-        "sinon": "11.1.1",
-        "standard": "16.0.3",
-        "swagmock": "1.0.0"
-    },
-    "pre-commit": [
-        "dep:check",
-        "lint",
-        "test"
-    ],
-    "scripts": {
-        "start": "node src/index.js server --api",
-        "test": "ava",
-        "test:coverage": "nyc ava",
-        "standard": "npx standard",
-        "standard:fix": "npx standard --fix",
-        "lint": "npm run standard",
-        "lint:fix": "npm run standard:fix",
-        "pre-commit": "1.2.2",
-        "regenerate": "yo swaggerize:test --framework hapi --apiPath './src/interface/swagger.json'",
-        "dep:check": "npx ncu -e 2",
-        "dep:update": "npx ncu -u",
-        "audit:resolve": "SHELL=sh resolve-audit --production",
-        "audit:check": "SHELL=sh check-audit --production"
-    },
     "generator-swaggerize": {
         "version": "4.1.0"
     },
-    "main": "./src/server"
+    "standard-version": {
+        "scripts": {
+            "postchangelog": "replace '\\[mojaloop/#(\\d+)\\]\\(https://github.com/mojaloop/(.*)/issues/(\\d+)\\)' '[mojaloop/#$1](https://github.com/mojaloop/project/issues/$1)' CHANGELOG.md"
+        }
+    }
 }

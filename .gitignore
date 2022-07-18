@@ -68,3 +68,15 @@ typings/
 
 # VSCode directory
 .vscode
+
+# Ignore test results
+**/test/results/*
+
+# https://devspace.sh/
+devspace*
+.devspace/**.*
+
+# Add ignores
+*IGNORE*
+*ignore*
+!.npmignore

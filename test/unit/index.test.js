@@ -57,7 +57,25 @@ Test('Commander should start default Handler via default', async test => {
   test.pass(SetupStub.initialize.calledWith(initOptions))
 })
 
-Test('Commander should start all prepare Handlers up with invalid args', async test => {
+Test('Commander should exit with invalid arg', async test => {
+  // stub process.exit
+  sandbox.stub(process, 'exit')
+
+  const argv = [
+    'node',
+    'index.js'
+  ]
+  process.argv = argv
+  const Index = Proxyquire('../../src/index', {
+    './server': SetupStub
+  })
+
+  test.pass(await Index)
+  test.falsy(SetupStub.initialize.called)
+  test.pass(process.exit.called)
+})
+
+Test('Commander should exit with no args', async test => {
   // stub process.exit
   sandbox.stub(process, 'exit')
 
@@ -67,7 +85,7 @@ Test('Commander should start all prepare Handlers up with invalid args', async t
     './server': SetupStub
   })
 
-  test.pass(Index)
-  test.truthy(SetupStub.initialize.called)
+  test.pass(await Index)
+  test.falsy(SetupStub.initialize.called)
   test.pass(process.exit.called)
 })

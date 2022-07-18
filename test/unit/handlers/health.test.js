@@ -31,25 +31,40 @@ const Mockgen = require('../../util/mockgen.js')
 const Handler = require('../../../src/domain/metadata/health')
 const Sinon = require('sinon')
 const Logger = require('@mojaloop/central-services-logger')
-const Server = require('../../../src/server')
+const ProxyHelper = require('../../util/proxyHelper')
 
 let sandbox
 let server
+let ServerOnlyWithEventSDKProxy
+let ServerProxy
 
-Test.beforeEach(async () => {
+Test.serial.beforeEach(async () => {
   try {
     sandbox = Sinon.createSandbox()
 
-    const initResult = await Server.initialize()
+    ServerOnlyWithEventSDKProxy = ProxyHelper.createServerOnlyWithEventSDKProxy(sandbox)
+    ServerProxy = ServerOnlyWithEventSDKProxy.ServerProxy
+
+    const initResult = await ServerProxy.initialize()
     server = initResult.server
   } catch (err) {
-    Logger.isErrorEnabled && Logger.error(`setupTest failed with error - ${err}`)
+    Logger.isErrorEnabled && Logger.error(`beforeEach failed with error - ${err}`)
+    throw err
   }
 })
 
-Test.afterEach(async () => {
-  sandbox.restore()
-  await server.stop()
+Test.serial.afterEach(async () => {
+  try {
+    sandbox.restore()
+    await server.stop()
+    sandbox = null
+    server = null
+    ServerOnlyWithEventSDKProxy = null
+    ServerProxy = null
+  } catch (err) {
+    Logger.isErrorEnabled && Logger.error(`afterEach failed with error - ${err}`)
+    throw err
+  }
 })
 
 /**
@@ -60,7 +75,6 @@ Test.afterEach(async () => {
  * responses: 200, 400, 401, 403, 404, 405, 406, 501, 503
  */
 Test.serial('test Health get operation', async function (t) {
-  // const server = new Hapi.Server()
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/health',
@@ -98,7 +112,6 @@ Test.serial('test Health get operation', async function (t) {
 })
 
 Test.serial('test Health throws and error', async function (t) {
-  // const server = await Initialise(await getPort())
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/health',

@@ -48,4 +48,5 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 
-test/temp
+test/*
+.circleci/*
