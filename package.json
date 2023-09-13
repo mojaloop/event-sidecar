@@ -37,6 +37,7 @@
         "lint": "npm run standard",
         "lint:fix": "npm run standard:fix",
         "regenerate": "yo swaggerize:test --framework hapi --apiPath './src/interface/swagger.json'",
+        "docker:build": "docker build --build-arg NODE_VERSION=\"$(cat .nvmrc)-alpine\" -t mojaloop/central-settlement:local .",
         "dep:check": "npx ncu -e 2",
         "dep:update": "npx ncu -u",
         "audit:fix": "npm audit fix",
