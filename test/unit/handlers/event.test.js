@@ -35,7 +35,8 @@ const eventHandler = require('../../../src/domain/event/handler')
 const Sinon = require('sinon')
 const Logger = require('@mojaloop/central-services-logger')
 const Initialise = require('../../../src/server').initialize
-const getPort = require('get-port')
+
+const getPort = async () => (await import('get-port')).default()
 
 const payload = {
   from: 'noresponsepayeefsp',
@@ -203,7 +204,9 @@ Test.serial('test Event processes correctly', async function (t) {
 
 Test.serial('test Event throws error and is handled correctly', async function (t) {
   const sandbox = Sinon.createSandbox()
-  const { server } = await Initialise(await getPort())
+
+  const port = await getPort()
+  const { server } = await Initialise(port)
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/event',
@@ -246,7 +249,9 @@ Test.serial('test Event throws error and is handled correctly', async function (
 
 Test.serial('test Event processes and response is logged correctly', async function (t) {
   const sandbox = Sinon.createSandbox()
-  const { server } = await Initialise(await getPort())
+
+  const port = await getPort()
+  const { server } = await Initialise(port)
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/event',

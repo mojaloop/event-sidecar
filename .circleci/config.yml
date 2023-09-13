@@ -165,7 +165,7 @@ jobs:
           command: npm -s run test:xunit
       - store_artifacts:
           path: ./test/results
-          prefix: test
+          destination: test
       - store_test_results:
           path: ./test/results
 
@@ -188,77 +188,9 @@ jobs:
           command: npm -s run test:coverage-check
       - store_artifacts:
           path: coverage
-          prefix: test
+          destination: test
       - store_test_results:
           path: coverage
-
-  test-integration:
-    executor: default-machine
-    steps:
-      - checkout
-      - run:
-          <<: *defaults_configure_nvm
-      - restore_cache:
-          key: dependency-cache-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Create dir for test results
-          command: mkdir -p ./test/results
-      - run:
-          name: Build and start the docker containers
-          command: |
-            ## This is not needed as we are only doing narrow-integration tests.
-            # docker-compose build
-
-            ## Lets pull only the Services needed for the Integration Test
-            docker-compose pull mysql kafka
-
-            ## Lets startup only the Services needed for the Integration Test
-            docker-compose up -d mysql kafka
-
-            ## Check straight away to see if any containers have exited
-            docker-compose ps
-
-            ## wait for services to be up and running
-            npm run wait-4-docker
-      - run:
-          name: Run the integration tests
-          command: |
-            npm rebuild
-            npm run test:int
-          environment:
-            ENDPOINT_URL: http://localhost:4545/notification
-      - store_artifacts:
-          path: ./test/results
-          prefix: test
-      - store_test_results:
-          path: ./test/results
-
-  test-functional:
-    executor: default-machine
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp
-      - run:
-          name: Load the pre-built docker local image from workspace
-          command: docker load -i /tmp/docker-image-local.tar
-      - run:
-          name: Download the mojaloop/ml-core-test-harness repo
-          command: |
-            git clone --depth 1 --branch v0.0.2 https://github.com/mojaloop/ml-core-test-harness.git /tmp/ml-core-test-harness
-      - run:
-          name: Execute TTK functional tests
-          command: |
-            cd /tmp/ml-core-test-harness
-            export CENTRAL_LEDGER_VERSION=local
-            docker-compose --project-name ttk-func --ansi never --profile all-services --profile ttk-provisioning --profile ttk-tests up -d
-            bash wait-for-container.sh ttk-func-ttk-tests-1
-            docker logs ttk-func-ttk-tests-1 > ./reports/ttk-tests-console.log
-            docker-compose -p ttk-func --ansi never down
-            cat ./reports/ttk-tests-console.log
-      - store_artifacts:
-          path: /tmp/ml-core-test-harness/reports
-          prefix: test
 
   vulnerability-check:
     executor: default-docker
@@ -279,7 +211,7 @@ jobs:
           command: npm run audit:check --silent -- --json > ./audit/results/auditResults.json
       - store_artifacts:
           path: ./audit/results
-          prefix: audit
+          destination: audit
 
   audit-licenses:
     executor: default-docker
@@ -297,7 +229,7 @@ jobs:
           command: cd /tmp/license-scanner && pathToRepo=$CIRCLE_WORKING_DIRECTORY make run
       - store_artifacts:
           path: /tmp/license-scanner/results
-          prefix: licenses
+          destination: licenses
 
   build-local:
     executor: default-machine
@@ -316,27 +248,6 @@ jobs:
           paths:
             - ./docker-image-local.tar
 
-  build:
-    executor: default-machine
-    steps:
-      - attach_workspace:
-          at: /tmp
-      - run:
-          name: Load the pre-built docker local image from workspace
-          command: docker load -i /tmp/docker-image-local.tar
-      - run:
-          name: Re-tag the image
-          command: |
-            echo "Re-tagging Docker image: $CIRCLE_TAG"
-            docker tag $DOCKER_ORG/$CIRCLE_PROJECT_REPONAME:local $DOCKER_ORG/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG
-      - run:
-          name: Save the new docker image to workspace
-          command: docker save -o /tmp/docker-image.tar $DOCKER_ORG/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG
-      - persist_to_workspace:
-          root: /tmp
-          paths:
-            - ./docker-image.tar
-
   license-scan:
     executor: default-machine
     steps:
@@ -352,7 +263,7 @@ jobs:
           command: cd /tmp/license-scanner && mode=docker dockerImages=$DOCKER_ORG/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG make run
       - store_artifacts:
           path: /tmp/license-scanner/results
-          prefix: licenses
+          destination: licenses
 
   image-scan:
     executor: anchore/anchore_engine
@@ -621,7 +532,6 @@ jobs:
 # CircleCI Workflow config
 ##
 workflows:
-  version: 2
   build_and_test:
     jobs:
       - pr-tools/pr-title-check:
@@ -680,33 +590,6 @@ workflows:
                 - /feature*/
                 - /bugfix*/
 
-      ## Currently not implemented
-      # - test-integration:
-      #     context: org-global
-      #     requires:
-      #       - setup
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      #       branches:
-      #         ignore:
-      #           - /feature*/
-      #           - /bugfix*/
-
-      ## Currently not implemented
-      # - test-functional:
-      #     context: org-global
-      #     requires:
-      #       - setup
-      #       - build-local
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      #       branches:
-      #         ignore:
-      #           - /feature*/
-      #           - /bugfix*/
-
       - vulnerability-check:
           context: org-global
           requires:
@@ -740,30 +623,11 @@ workflows:
               ignore:
                 - /feature*/
                 - /bugfix*/
-      - build:
-          context: org-global
-          requires:
-            - setup
-            - test-dependencies
-            - test-lint
-            - test-unit
-            - test-coverage
-            ## Currently not implemented
-            # - test-integration
-            # - test-functional
-            - vulnerability-check
-            - audit-licenses
-            - build-local
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*(\-snapshot(\.[0-9]+)?)?(\-hotfix(\.[0-9]+)?)?(\-perf(\.[0-9]+)?)?/
-            branches:
-              ignore:
-                - /.*/
+
       - license-scan:
           context: org-global
           requires:
-            - build
+            - build-local
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\-snapshot(\.[0-9]+)?)?(\-hotfix(\.[0-9]+)?)?(\-perf(\.[0-9]+)?)?/
@@ -773,7 +637,7 @@ workflows:
       - image-scan:
           context: org-global
           requires:
-            - build
+            - build-local
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\-snapshot(\.[0-9]+)?)?(\-hotfix(\.[0-9]+)?)?(\-perf(\.[0-9]+)?)?/
@@ -785,13 +649,9 @@ workflows:
           context: org-global
           requires:
             - pr-tools/pr-title-check
-            - test-dependencies
             - test-lint
             - test-unit
             - test-coverage
-            ## Currently not implemented
-            # - test-integration
-            # - test-functional
             - vulnerability-check
             - audit-licenses
             - license-scan
@@ -814,14 +674,10 @@ workflows:
           context: org-global
           requires:
             - pr-tools/pr-title-check
-            - test-dependencies
             - test-lint
             - test-unit
-            - build
+            - build-local
             - test-coverage
-            ## Currently not implemented
-            # - test-integration
-            # - test-functional
             - vulnerability-check
             - audit-licenses
             - license-scan
@@ -836,14 +692,10 @@ workflows:
           context: org-global
           requires:
             - pr-tools/pr-title-check
-            - test-dependencies
             - test-lint
             - test-unit
-            - build
+            - build-local
             - test-coverage
-            ## Currently not implemented
-            # - test-integration
-            # - test-functional
             - vulnerability-check
             - audit-licenses
             - license-scan
