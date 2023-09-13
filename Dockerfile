@@ -6,7 +6,7 @@ ARG NODE_VERSION=lts-alpine
 #  export NODE_VERSION="$(cat .nvmrc)-alpine" \
 #  docker build \
 #    --build-arg NODE_VERSION=$NODE_VERSION \
-#    -t mojaloop/sdk-scheme-adapter:local \
+#    -t mojaloop/event-sidecar:local \
 #    . \
 #
 
@@ -16,12 +16,12 @@ FROM node:${NODE_VERSION} as builder
 WORKDIR /opt/app
 
 RUN apk --no-cache add git
-RUN apk add --no-cache -t build-dependencies make gcc g++ python3 libtool libressl-dev autoconf automake bash \
+RUN apk add --no-cache -t build-dependencies make gcc g++ python3 libtool openssl-dev autoconf automake bash \
     && cd $(npm root -g)/npm
 
 COPY package.json package-lock.json* /opt/app/
 
-RUN npm ci --production
+RUN npm ci --omit=dev
 
 FROM node:${NODE_VERSION}
 WORKDIR /opt/app
