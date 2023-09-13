@@ -206,7 +206,7 @@ Test.serial('test Event throws error and is handled correctly', async function (
   const sandbox = Sinon.createSandbox()
 
   const port = await getPort()
-  const { server } = await Initialise(port)
+  const { server, grpcServer } = await Initialise(port)
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/event',
@@ -243,6 +243,7 @@ Test.serial('test Event throws error and is handled correctly', async function (
   sandbox.stub(KafkaUtil, 'produceGeneralMessage').throwsException('Error')
   const response = await server.inject(options)
   await server.stop()
+  grpcServer.server.forceShutdown()
   t.is(response.statusCode, 400, 'Error thrown')
   sandbox.restore()
 })
@@ -251,7 +252,7 @@ Test.serial('test Event processes and response is logged correctly', async funct
   const sandbox = Sinon.createSandbox()
 
   const port = await getPort()
-  const { server } = await Initialise(port)
+  const { server, grpcServer } = await Initialise(port)
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/event',
@@ -288,6 +289,7 @@ Test.serial('test Event processes and response is logged correctly', async funct
   sandbox.stub(KafkaUtil, 'produceGeneralMessage').returns(Promise.resolve(true))
   const response = await server.inject(options)
   await server.stop()
+  grpcServer.server.forceShutdown()
   t.is(response.statusCode, 201, 'Success')
   sandbox.restore()
 })
