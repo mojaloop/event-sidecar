@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [13.0.1](https://github.com/mojaloop/event-sidecar/compare/v13.0.0...v13.0.1) (2023-10-13)
+
+
+### Chore
+
+* add missing advisory ([ccc365a](https://github.com/mojaloop/event-sidecar/commit/ccc365ac1fc14273a472c7035ee2cc040dddfd7d))
+* update deps ([901a695](https://github.com/mojaloop/event-sidecar/commit/901a6955dbc1b281f64f356c406106736bf987a6))
+
 ## [13.0.0](https://github.com/mojaloop/event-sidecar/compare/v12.0.0...v13.0.0) (2023-09-14)
 
 
