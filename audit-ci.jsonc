@@ -5,6 +5,7 @@
   "moderate": true,
   "allowlist": [
     "GHSA-w5p7-h5w8-2hfq",
-    "GHSA-qgmg-gppg-76g5"
+    "GHSA-qgmg-gppg-76g5",
+    "GHSA-gxpj-cx7g-858c"
   ]
 }
