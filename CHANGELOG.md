@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [14.0.1](https://github.com/mojaloop/event-sidecar/compare/v14.0.0...v14.0.1) (2024-06-12)
+
+
+### Chore
+
+* **deps-dev:** bump ip from 2.0.0 to 2.0.1 ([93c2e76](https://github.com/mojaloop/event-sidecar/commit/93c2e76578581df0c7f8c45024d4522f8507b606))
+* **deps:** bump json5 from 1.0.1 to 1.0.2 ([0193410](https://github.com/mojaloop/event-sidecar/commit/0193410d52fa8a5abf137d8288cba021d0ef4e0c))
+
 ## [14.0.0](https://github.com/mojaloop/event-sidecar/compare/v13.0.1...v14.0.0) (2023-11-06)
 
 
