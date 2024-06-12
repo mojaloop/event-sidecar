@@ -86,9 +86,6 @@
     "ava": {
         "files": [
             "test/unit/**/**.test.js"
-        ],
-        "watchMode.ignoreChanges": [
-            "test/unit/**/**.test.js"
         ]
     },
     "generator-swaggerize": {
