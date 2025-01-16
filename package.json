@@ -1,7 +1,7 @@
 {
     "name": "event-sidecar",
     "description": "Event Sidecar is used to route an event to Kafka",
-    "version": "14.0.1",
+    "version": "14.0.2",
     "author": "ModusBox",
     "contributors": [
         "Rajiv Mothilal <rajiv.mothilal@modusbox.com>",
@@ -83,13 +83,13 @@
         "tap-spec": "^5.0.0",
         "tap-xunit": "^2.4.1"
     },
-  "overrides": {
-    "cross-spawn": "7.0.6",
-    "swagmock": {
-      "validator": "13.12.0"
+    "overrides": {
+        "cross-spawn": "7.0.6",
+        "swagmock": {
+            "validator": "13.12.0"
+        },
+        "trim": "0.0.3"
     },
-    "trim": "0.0.3"
-  },
     "ava": {
         "files": [
             "test/unit/**/**.test.js"
