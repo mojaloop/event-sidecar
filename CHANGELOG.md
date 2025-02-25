@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [14.0.3](https://github.com/mojaloop/event-sidecar/compare/v14.0.2...v14.0.3) (2025-02-25)
+
+
+### Chore
+
+* maintenance updates ([7056bbc](https://github.com/mojaloop/event-sidecar/commit/7056bbccaac5ca563b8fda39d2e6084c56eebd49))
+
 ### [14.0.2](https://github.com/mojaloop/event-sidecar/compare/v14.0.1...v14.0.2) (2025-01-16)
 
 
