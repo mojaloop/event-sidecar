@@ -24,6 +24,7 @@
     "main": "./src/server",
     "pre-commit": [
         "dep:check",
+        "audit:check",
         "lint",
         "test"
     ],
