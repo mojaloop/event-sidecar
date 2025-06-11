@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [14.1.0](https://github.com/mojaloop/event-sidecar/compare/v14.0.3...v14.1.0) (2025-06-11)
+
+
+### Features
+
+* bump up the node version to v22.15.1 ([4cb5d9f](https://github.com/mojaloop/event-sidecar/commit/4cb5d9fc0ff692b3f6b6c41fc3bf26f27a5c07e8))
+* bump up the node version to v22.15.1 ([aaf8ba2](https://github.com/mojaloop/event-sidecar/commit/aaf8ba2e67c6992a854e9d8659f155eab0a383d2))
+
 ### [14.0.3](https://github.com/mojaloop/event-sidecar/compare/v14.0.2...v14.0.3) (2025-02-25)
 
 
