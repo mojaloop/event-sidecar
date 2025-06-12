@@ -58,7 +58,7 @@
         "@hapi/vision": "7.0.3",
         "@mojaloop/central-services-logger": "11.9.0",
         "@mojaloop/central-services-metrics": "12.6.0",
-        "@mojaloop/central-services-stream": "11.6.1",
+        "@mojaloop/central-services-stream": "11.7.0",
         "@mojaloop/event-sdk": "14.6.0",
         "blipp": "4.0.2",
         "glob": "11.0.2",
