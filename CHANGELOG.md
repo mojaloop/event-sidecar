@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [14.1.1](https://github.com/mojaloop/event-sidecar/compare/v14.1.0...v14.1.1) (2025-06-16)
+
+
+### Chore
+
+* **sbom:** add initial sbom ([4f85d54](https://github.com/mojaloop/event-sidecar/commit/4f85d5429829432fe119027965c36b294786fdf7))
+* **sbom:** update sbom-v14.1.0.csv [skip ci] ([855bd9c](https://github.com/mojaloop/event-sidecar/commit/855bd9cf981c9d87207cd89c5dfb88e10e0daaf7))
+
 ## [14.1.0](https://github.com/mojaloop/event-sidecar/compare/v14.0.3...v14.1.0) (2025-06-11)
 
 
