@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [14.1.2](https://github.com/mojaloop/event-sidecar/compare/v14.1.1...v14.1.2) (2025-06-19)
+
+
+### Chore
+
+* update orb version ([0473785](https://github.com/mojaloop/event-sidecar/commit/04737858f1bf36ba09654b3ee722b517473910a3))
+
 ### [14.1.1](https://github.com/mojaloop/event-sidecar/compare/v14.1.0...v14.1.1) (2025-06-16)
 
 
