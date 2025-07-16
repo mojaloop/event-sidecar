@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [14.2.0](https://github.com/mojaloop/event-sidecar/compare/v14.1.2...v14.2.0) (2025-07-16)
+
+
+### Features
+
+* add initial abom ([9b23bd7](https://github.com/mojaloop/event-sidecar/commit/9b23bd770189a353791a92fbab7d92cba7ca115b))
+
 ### [14.1.2](https://github.com/mojaloop/event-sidecar/compare/v14.1.1...v14.1.2) (2025-06-19)
 
 
