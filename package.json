@@ -61,7 +61,7 @@
         "@mojaloop/central-services-stream": "11.8.2",
         "@mojaloop/event-sdk": "14.6.1",
         "blipp": "4.0.2",
-        "glob": "11.0.3",
+        "glob": "11.1.0",
         "hapi-openapi": "3.0.0",
         "hapi-swagger": "17.3.2",
         "mustache": "4.2.0",
