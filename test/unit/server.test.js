@@ -312,3 +312,34 @@ setupTest.serial('initialize grpc server without metadata', async test => {
   }
   eventHandlerStub.restore()
 })
+
+setupTest.serial('initialize grpc server with service and trancastionId', async test => {
+  const eventHandlerStub = sandbox.stub(eventHandler, 'logEvent')
+  try {
+    const { server, grpcServer } = await ServerProxy.initialize()
+
+    grpcServer.emit(eventSDK.EVENT_RECEIVED, {
+      metadata: {
+        trace: {
+          service: 'test-service',
+          spanId: 'test',
+          traceId: 'test',
+          tags: {
+            trancastionId: 'test-transaction-id',
+            transactionId: 'test-transaction-id',
+            transactionAction: 'test',
+            transactionType: 'test',
+            tracestate: 'test'
+          }
+        }
+      }
+    })
+    grpcServer.emit('error')
+    test.assert(server, 'return server object')
+    test.assert(grpcServer, 'return grpcServer')
+  } catch (err) {
+    Logger.isErrorEnabled && Logger.error(`init failed with error - ${JSON.stringify(err, null, 2)}`)
+    test.fail()
+  }
+  eventHandlerStub.restore()
+})

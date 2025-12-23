@@ -210,7 +210,8 @@ Test.serial('test Event throws error and is handled correctly', async function (
   const sandbox = Sinon.createSandbox()
 
   const port = await getPort()
-  const { server, grpcServer } = await Initialise(port)
+  const grpcPort = await getPort()
+  const { server, grpcServer } = await Initialise(port, 'localhost', grpcPort)
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/event',
@@ -256,7 +257,8 @@ Test.serial('test Event processes and response is logged correctly', async funct
   const sandbox = Sinon.createSandbox()
 
   const port = await getPort()
-  const { server, grpcServer } = await Initialise(port)
+  const grpcPort = await getPort()
+  const { server, grpcServer } = await Initialise(port, 'localhost', grpcPort)
   const requests = new Promise((resolve, reject) => {
     Mockgen().requests({
       path: '/event',

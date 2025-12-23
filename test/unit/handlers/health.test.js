@@ -37,6 +37,8 @@ const Sinon = require('sinon')
 const Logger = require('@mojaloop/central-services-logger')
 const ProxyHelper = require('../../util/proxyHelper')
 
+const getPort = async () => (await import('get-port')).default()
+
 let sandbox
 let server
 let ServerOnlyWithEventSDKProxy
@@ -49,7 +51,8 @@ Test.serial.beforeEach(async () => {
     ServerOnlyWithEventSDKProxy = ProxyHelper.createServerOnlyWithEventSDKProxy(sandbox)
     ServerProxy = ServerOnlyWithEventSDKProxy.ServerProxy
 
-    const initResult = await ServerProxy.initialize()
+    const port = await getPort()
+    const initResult = await ServerProxy.initialize(port)
     server = initResult.server
   } catch (err) {
     Logger.isErrorEnabled && Logger.error(`beforeEach failed with error - ${err}`)
