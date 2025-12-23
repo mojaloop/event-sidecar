@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [14.2.1](https://github.com/mojaloop/event-sidecar/compare/v14.2.0...v14.2.1) (2025-12-23)
+
+
+### Chore
+
+* fix vuls ([58a8532](https://github.com/mojaloop/event-sidecar/commit/58a8532de5813c9f6bafb80a9419b6b6754c5b60))
+* meet branches code coverage ([46cb5af](https://github.com/mojaloop/event-sidecar/commit/46cb5af367c19ac3779b81c78c4f72a88b84cf05))
+* **sbom:** update sbom [skip ci] ([b6937df](https://github.com/mojaloop/event-sidecar/commit/b6937df2005b08e9677ab50df1f6012a080191e5))
+
 ## [14.2.0](https://github.com/mojaloop/event-sidecar/compare/v14.1.2...v14.2.0) (2025-07-16)
 
 
