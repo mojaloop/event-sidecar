@@ -7,6 +7,7 @@
     "validator",
     "GHSA-2g4f-4pwh-qvx6",
     "GHSA-9965-vmph-33xx",
-    "GHSA-vghf-hv5q-vc2g"
+    "GHSA-vghf-hv5q-vc2g",
+    "GHSA-3ppc-4f35-3m26" // minimatch ReDoS - fix requires v10 (major version break), unfixable via override
   ]
 }
