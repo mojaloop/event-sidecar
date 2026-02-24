@@ -1,9 +1,4 @@
 ignore:
-  - vulnerability: GHSA-5j98-mcp5-4vw2
-    include-aliases: true
-    reason: glob upgraded to 10.5.0 in package.json, but Node.js 22.20.0-alpine3.22 is still using glob 10.4.5
-  - vulnerability: GHSA-9965-vmph-33xx
-  - vulnerability: GHSA-vghf-hv5q-vc2g
   - vulnerability: CVE-2025-15467
     include-aliases: true
     reason: "Alpine base image package (apk): libcrypto3 - no npm fix available as of 2026-02-23 (critical severity)"
