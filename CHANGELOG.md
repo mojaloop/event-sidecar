@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [14.2.2](https://github.com/mojaloop/event-sidecar/compare/v14.2.1...v14.2.2) (2026-02-24)
+
+
+### Bug Fixes
+
+* add scan-type: source to .grype.yaml to fix Grype CI step ([d81ca96](https://github.com/mojaloop/event-sidecar/commit/d81ca96d1a5deb67d6399df00e1ed38216ceb1f0))
+* clean up security configs, fix validator override conflict ([603d7c8](https://github.com/mojaloop/event-sidecar/commit/603d7c8cc9b315df52d7a98829dadcb05d6a68c1))
+* remove minimatch 10.2.1 override (major version break) and add to audit-ci allowlist ([fe2f09e](https://github.com/mojaloop/event-sidecar/commit/fe2f09e061db289d5116c679edec62949ab887d5))
+
+
+### Chore
+
+* **sbom:** update sbom [skip ci] ([13d42db](https://github.com/mojaloop/event-sidecar/commit/13d42dbb4950e211dcaa5f2cb6c4db60e5466de7))
+* update dependencies and apply security patches ([918021c](https://github.com/mojaloop/event-sidecar/commit/918021cbb432b65c19721a5df5f6fa9fd0b982c1))
+* update Dockerfile NODE_VERSION to 22.22.0-alpine3.23 ([e8a5cff](https://github.com/mojaloop/event-sidecar/commit/e8a5cff4fec97af3ff38efe3fc212ed8369755dd))
+* update orb ([79f9213](https://github.com/mojaloop/event-sidecar/commit/79f921397893448232f53f31e19d489ddaa28f91))
+
 ### [14.2.1](https://github.com/mojaloop/event-sidecar/compare/v14.2.0...v14.2.1) (2025-12-23)
 
 
