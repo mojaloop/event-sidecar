@@ -73,7 +73,7 @@
     "audit-ci": "7.1.0",
     "ava": "7.0.0",
     "esm": "3.2.25",
-    "get-port": "7.1.0",
+    "get-port": "7.2.0",
     "npm-check-updates": "19.6.5",
     "nyc": "18.0.0",
     "pre-commit": "1.2.2",
