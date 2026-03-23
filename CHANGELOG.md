@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [14.2.3](https://github.com/mojaloop/event-sidecar/compare/v14.2.2...v14.2.3) (2026-03-23)
+
+
+### Bug Fixes
+
+* use per-major-version minimatch override to avoid breaking glob/nyc ([ae47dde](https://github.com/mojaloop/event-sidecar/commit/ae47dde32c898ca0f1b1f0f00544b3706e838672))
+
+
+### Chore
+
+* add private:true to prevent npm publish ([#4384](https://github.com/mojaloop/event-sidecar/issues/4384)) ([dc911c4](https://github.com/mojaloop/event-sidecar/commit/dc911c49f8131703b0589c96d2a2c7af729447b6))
+* **sbom:** update sbom [skip ci] ([bb7c142](https://github.com/mojaloop/event-sidecar/commit/bb7c142ed3ebdcc1deab29158ba81440116c41d1))
+* update dependencies and fix vulnerabilities ([665d325](https://github.com/mojaloop/event-sidecar/commit/665d32508a8d8ea0c78a1722db6a62416a3c9f9d))
+* update node 22.22.1, orb 1.1.19, fix npm audit overrides ([f325f9f](https://github.com/mojaloop/event-sidecar/commit/f325f9f8ca48f961d36f85b338a126fa6240d019))
+
 ### [14.2.2](https://github.com/mojaloop/event-sidecar/compare/v14.2.1...v14.2.2) (2026-02-24)
 
 
