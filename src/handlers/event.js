@@ -13,7 +13,7 @@ module.exports = {
    * produces: application/json
    * responses: 200, 400, 401, 403, 404, 405, 406, 501, 503
    */
-  post: async function (request, h) {
+  post: async function (context, request, h) {
     try {
       await handler.handleRestRequest(request.payload)
       return h.response().code(201)

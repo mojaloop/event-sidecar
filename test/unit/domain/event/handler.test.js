@@ -29,7 +29,7 @@
 
 'use strict'
 
-const setupTest = require('ava')
+const setupTest = require('ava').default
 const Sinon = require('sinon')
 const Logger = require('@mojaloop/central-services-logger')
 const Proxyquire = require('proxyquire')

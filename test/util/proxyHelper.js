@@ -32,7 +32,6 @@ const { EventEmitter } = require('events')
 const Proxyquire = require('proxyquire')
 const Path = require('path')
 const Hapi = require('@hapi/hapi')
-const HapiOpenapi = require('hapi-openapi')
 
 const eventSDK = require('@mojaloop/event-sdk')
 const Logger = require('@mojaloop/central-services-logger')
@@ -66,7 +65,6 @@ const createServerOnlyWithEventSDKProxy = (sandbox) => {
 
   const ServerProxy = Proxyquire('../../src/server', {
     '@hapi/hapi': Hapi,
-    'hapi-openapi': HapiOpenapi,
     path: Path,
     './lib/config': Config,
     '@mojaloop/event-sdk': EventSDKStub
@@ -84,11 +82,7 @@ const createServerFullProxy = (sandbox) => {
     start: sandbox.stub().resolves(),
     stop: sandbox.stub().resolves(),
     log: sandbox.stub().resolves(),
-    plugins: {
-      openapi: {
-        setHost: sandbox.spy()
-      }
-    },
+    route: sandbox.stub(),
     info: {
       port: Config.PORT
     },
@@ -97,7 +91,6 @@ const createServerFullProxy = (sandbox) => {
   const HapiStub = {
     Server: sandbox.stub().returns(ServerStub)
   }
-  const HapiOpenAPIStub = sandbox.stub()
   const PathStub = Path
   const ConfigStub = Config
 
@@ -108,7 +101,6 @@ const createServerFullProxy = (sandbox) => {
 
   const ServerProxy = Proxyquire('../../src/server', {
     '@hapi/hapi': HapiStub,
-    'hapi-openapi': HapiOpenAPIStub,
     path: PathStub,
     './lib/config': ConfigStub,
     '@mojaloop/event-sdk': EventSDKStub
@@ -116,7 +108,6 @@ const createServerFullProxy = (sandbox) => {
   return {
     ServerStub,
     HapiStub,
-    HapiOpenAPIStub,
     PathStub,
     ConfigStub,
     EventSDKStub,

@@ -29,16 +29,12 @@
 
 'use strict'
 
-const Test = require('ava')
-const Hapi = require('@hapi/hapi')
-const Path = require('path')
-const HapiOpenAPI = require('hapi-openapi')
-const Mockgen = require('../../util/mockgen.js')
+const Test = require('ava').default
 const KafkaUtil = require('../../../src/lib/kafka/util')
 const eventHandler = require('../../../src/domain/event/handler')
 const Sinon = require('sinon')
-const Logger = require('@mojaloop/central-services-logger')
 const Initialise = require('../../../src/server').initialize
+const CreateServer = require('../../../src/server').createServer
 
 const getPort = async () => (await import('get-port')).default()
 
@@ -88,68 +84,12 @@ const payload = {
  */
 Test.serial('test Event throws and error', async function (t) {
   const sandbox = Sinon.createSandbox()
-  const server = new Hapi.Server()
-  await server.register({
-    plugin: HapiOpenAPI,
-    options: {
-      api: Path.resolve(__dirname, '../../../src/interface/swagger.json'),
-      handlers: Path.join(__dirname, '../../../src/handlers'),
-      outputvalidation: false
-    }
-  })
-  await server.ext([
-    {
-      type: 'onPreResponse',
-      method: (request, h) => {
-        if (!request.response.isBoom) {
-          Logger.isInfoEnabled && Logger.info(request.response)
-        } else {
-          const error = request.response
-          error.message = {
-            errorInformation: {
-              errorCode: error.statusCode,
-              errorDescription: error.message,
-              extensionList: [{
-                key: '',
-                value: ''
-              }]
-            }
-          }
-          error.reformat()
-        }
-        return h.continue
-      }
-    }
-  ])
-  const requests = new Promise((resolve, reject) => {
-    Mockgen().requests({
-      path: '/event',
-      operation: 'post'
-    }, function (error, mock) {
-      return error ? reject(error) : resolve(mock)
-    })
-  })
-  const mock = await requests
-  t.pass(mock)
-  t.pass(mock.request)
-  // Get the resolved path from mock request
-  // Mock request Path templates({}) are resolved using path parameters
+  const port = await getPort()
+  const server = await CreateServer(port)
   const options = {
     method: 'post',
-    url: mock.request.path
-  }
-  if (mock.request.body) {
-    // Send the request body
-    options.payload = mock.request.body
-  } else if (mock.request.formData) {
-    // Send the request form data
-    options.payload = mock.request.formData
-    // Set the Content-Type as application/x-www-form-urlencoded
-    options.headers = options.headers || {}
-  }
-  // If headers are present, set the headers.
-  if (mock.request.headers && mock.request.headers.length > 0) {
-    options.headers = mock.request.headers
+    url: '/event',
+    payload
   }
   sandbox.stub(eventHandler, 'handleRestRequest').throws(new Error('Error'))
   const response = await server.inject(options)
@@ -160,44 +100,12 @@ Test.serial('test Event throws and error', async function (t) {
 
 Test.serial('test Event processes correctly', async function (t) {
   const sandbox = Sinon.createSandbox()
-  const server = new Hapi.Server()
-  await server.register({
-    plugin: HapiOpenAPI,
-    options: {
-      api: Path.resolve(__dirname, '../../../src/interface/swagger.json'),
-      handlers: Path.join(__dirname, '../../../src/handlers'),
-      outputvalidation: true
-    }
-  })
-  const requests = new Promise((resolve, reject) => {
-    Mockgen().requests({
-      path: '/event',
-      operation: 'post'
-    }, function (error, mock) {
-      return error ? reject(error) : resolve(mock)
-    })
-  })
-  const mock = await requests
-  t.pass(mock)
-  t.pass(mock.request)
-  // Get the resolved path from mock request
-  // Mock request Path templates({}) are resolved using path parameters
+  const port = await getPort()
+  const server = await CreateServer(port)
   const options = {
     method: 'post',
-    url: mock.request.path
-  }
-  if (mock.request.body) {
-    // Send the request body
-    options.payload = mock.request.body
-  } else if (mock.request.formData) {
-    // Send the request form data
-    options.payload = mock.request.formData
-    // Set the Content-Type as application/x-www-form-urlencoded
-    options.headers = options.headers || {}
-  }
-  // If headers are present, set the headers.
-  if (mock.request.headers && mock.request.headers.length > 0) {
-    options.headers = mock.request.headers
+    url: '/event',
+    payload
   }
   sandbox.stub(KafkaUtil, 'produceGeneralMessage').returns(Promise.resolve(true))
   const response = await server.inject(options)
@@ -212,38 +120,10 @@ Test.serial('test Event throws error and is handled correctly', async function (
   const port = await getPort()
   const grpcPort = await getPort()
   const { server, grpcServer } = await Initialise(port, 'localhost', grpcPort)
-  const requests = new Promise((resolve, reject) => {
-    Mockgen().requests({
-      path: '/event',
-      operation: 'post'
-    }, function (error, mock) {
-      return error ? reject(error) : resolve(mock)
-    })
-  })
-  const mock = await requests
-  t.pass(mock)
-  t.pass(mock.request)
-  // Get the resolved path from mock request
-  // Mock request Path templates({}) are resolved using path parameters
   const options = {
     method: 'post',
-    url: '/event'
-  }
-  mock.request = {
-    body: payload
-  }
-  if (mock.request.body) {
-    // Send the request body
-    options.payload = mock.request.body
-  } else if (mock.request.formData) {
-    // Send the request form data
-    options.payload = mock.request.formData
-    // Set the Content-Type as application/x-www-form-urlencoded
-    options.headers = options.headers || {}
-  }
-  // If headers are present, set the headers.
-  if (mock.request.headers && mock.request.headers.length > 0) {
-    options.headers = mock.request.headers
+    url: '/event',
+    payload
   }
   sandbox.stub(KafkaUtil, 'produceGeneralMessage').throwsException('Error')
   const response = await server.inject(options)
@@ -259,38 +139,10 @@ Test.serial('test Event processes and response is logged correctly', async funct
   const port = await getPort()
   const grpcPort = await getPort()
   const { server, grpcServer } = await Initialise(port, 'localhost', grpcPort)
-  const requests = new Promise((resolve, reject) => {
-    Mockgen().requests({
-      path: '/event',
-      operation: 'post'
-    }, function (error, mock) {
-      return error ? reject(error) : resolve(mock)
-    })
-  })
-  const mock = await requests
-  t.pass(mock)
-  t.pass(mock.request)
-  // Get the resolved path from mock request
-  // Mock request Path templates({}) are resolved using path parameters
   const options = {
     method: 'post',
-    url: '/event'
-  }
-  mock.request = {
-    body: payload
-  }
-  if (mock.request.body) {
-    // Send the request body
-    options.payload = mock.request.body
-  } else if (mock.request.formData) {
-    // Send the request form data
-    options.payload = mock.request.formData
-    // Set the Content-Type as application/x-www-form-urlencoded
-    options.headers = options.headers || {}
-  }
-  // If headers are present, set the headers.
-  if (mock.request.headers && mock.request.headers.length > 0) {
-    options.headers = mock.request.headers
+    url: '/event',
+    payload
   }
   sandbox.stub(KafkaUtil, 'produceGeneralMessage').returns(Promise.resolve(true))
   const response = await server.inject(options)

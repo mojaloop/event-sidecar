@@ -30,7 +30,7 @@
 
 'use strict'
 
-const Test = require('ava')
+const Test = require('ava').default
 const Sinon = require('sinon')
 const Logger = require('@mojaloop/central-services-logger')
 const Util = require('util')

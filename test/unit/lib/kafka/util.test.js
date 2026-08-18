@@ -33,7 +33,7 @@
 'use strict'
 
 const Sinon = require('sinon')
-const Test = require('ava')
+const Test = require('ava').default
 const Mustache = require('mustache')
 const Uuid = require('uuid4')
 const KafkaProducer = require('@mojaloop/central-services-stream').Kafka.Producer
