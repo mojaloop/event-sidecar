@@ -20,7 +20,10 @@ RUN apk add --no-cache -t build-dependencies make gcc g++ python3 libtool openss
 
 COPY package.json package-lock.json* /opt/app/
 
-RUN npm ci --omit=dev
+# Lifecycle scripts are skipped for supply-chain safety (docker:S6505); node-rdkafka
+# is the only production dependency that needs its native build, so run it explicitly.
+RUN npm ci --omit=dev --ignore-scripts
+RUN npm rebuild node-rdkafka
 
 FROM node:${NODE_VERSION}
 WORKDIR /opt/app
