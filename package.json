@@ -65,7 +65,7 @@
     "glob": "13.0.6",
     "hapi-swagger": "17.3.2",
     "mustache": "4.2.0",
-    "openapi-backend": "5.20.0",
+    "openapi-backend": "5.20.1",
     "uuid4": "2.0.3"
   },
   "devDependencies": {
@@ -74,7 +74,7 @@
     "ava": "8.0.1",
     "esm": "3.2.25",
     "get-port": "7.2.0",
-    "npm-check-updates": "23.0.2",
+    "npm-check-updates": "23.1.0",
     "nyc": "18.0.0",
     "pre-commit": "2.0.0",
     "proxyquire": "2.1.3",
