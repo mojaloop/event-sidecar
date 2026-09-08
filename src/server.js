@@ -1,7 +1,7 @@
 /*****
  License
  --------------
- Copyright © 2020-2025 Mojaloop Foundation
+ Copyright © 2020-2026 Mojaloop Foundation
  The Mojaloop files are made available by the Mojaloop Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
@@ -20,7 +20,7 @@
  optionally within square brackets <email>.
 
  * Mojaloop Foundation
- - Name Surname <name.surname@mojaloop.io>
+ - Juan Correa <code@juancorrea.io>
 
  * ModusBox
  - Rajiv Mothilal <rajiv.mothilal@modusbox.com>
@@ -30,18 +30,26 @@
 'use strict'
 
 const Hapi = require('@hapi/hapi')
-const HapiOpenAPI = require('hapi-openapi')
 const Path = require('path')
 const Config = require('./lib/config.js')
 const Logger = require('@mojaloop/central-services-logger')
 const Plugins = require('./plugins')
 const RequestLogger = require('./lib/requestLogger')
+const OpenapiBackend = require('./lib/openapiBackend')
+const HealthHandler = require('./handlers/health')
+const EventHandler = require('./handlers/event')
 const eventSDK = require('@mojaloop/event-sdk')
 const eventHandler = require('./domain/event/handler')
 
 const openAPIOptions = {
   api: Path.resolve(__dirname, './interface/swagger.json'),
-  handlers: Path.resolve(__dirname, './handlers')
+  handlers: {
+    GetHealth: HealthHandler.get,
+    PostEvent: EventHandler.post,
+    validationFail: OpenapiBackend.validationFail,
+    notFound: OpenapiBackend.notFound,
+    methodNotAllowed: OpenapiBackend.methodNotAllowed
+  }
 }
 
 const LOG_ENABLED = !!process.env.LOG_ENABLED | false
@@ -58,13 +66,23 @@ const createServer = async (port) => {
   const server = await new Hapi.Server({
     port
   })
+  const api = await OpenapiBackend.initialise(openAPIOptions.api, openAPIOptions.handlers)
   await Plugins.registerPlugins(server)
-  await server.register([
-    {
-      plugin: HapiOpenAPI,
-      options: openAPIOptions
-    }
-  ])
+  server.route({
+    method: '*',
+    path: '/{path*}',
+    handler: (req, h) => api.handleRequest(
+      {
+        method: req.method,
+        path: req.path,
+        body: req.payload,
+        query: req.query,
+        headers: req.headers
+      },
+      req,
+      h
+    )
+  })
   await server.ext([
     {
       type: 'onPreHandler',
@@ -154,7 +172,6 @@ const createRPCServer = async (grpcHost = Config.EVENT_LOGGER_GRPC_HOST, grpcPor
 const initialize = async (port = Config.PORT, grpcHost = Config.EVENT_LOGGER_GRPC_HOST, grpcPort = Config.EVENT_LOGGER_GRPC_PORT) => {
   const grpcServer = await createRPCServer(grpcHost, grpcPort)
   const server = await createServer(port)
-  server.plugins.openapi.setHost(server.info.host + ':' + server.info.port)
   Logger.isInfoEnabled && Logger.info(`Server running on ${server.info.host}:${server.info.port}`)
   return {
     server,
@@ -163,5 +180,6 @@ const initialize = async (port = Config.PORT, grpcHost = Config.EVENT_LOGGER_GRP
 }
 
 module.exports = {
+  createServer,
   initialize
 }

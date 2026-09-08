@@ -11,6 +11,22 @@ Swagger api [src/interface/swagger.json](src/interface/swagger.json)
 - Kafka partitions will be determined by the event-type (e.g. log, audit, trace, errors etc).
 - Each Mojaloop component will have its own tightly coupled Sidecar.
 
+## Configuration
+
+### ERROR_HANDLING_AJV_JOI_PARITY
+
+**Leave `ERROR_HANDLING_AJV_JOI_PARITY` unset (`false`) - it has no effect on this service.**
+
+`ERROR_HANDLING_AJV_JOI_PARITY` was introduced in `@mojaloop/central-services-error-handling` 13.2.0 ([central-services-error-handling#216](https://github.com/mojaloop/central-services-error-handling/issues/216)) to make the ajv/joi error mapping opt-in for services that moved from `hapi-openapi` (joi) to `openapi-backend` (ajv). It is only read by `createFSPIOPErrorFromOpenapiError`, and this service never calls it: `@mojaloop/central-services-error-handling` is not a dependency of event-sidecar, and the local `validationFail` in [src/lib/openapiBackend.js](src/lib/openapiBackend.js) answers a failed request with HTTP 400 and the raw ajv errors:
+
+```json
+{ "errors": [ { "keyword": "pattern", "instancePath": "/...", "message": "..." } ] }
+```
+
+Request validation failures were not mapped to FSPIOP error codes before the migration either, so setting the flag either way leaves this service's responses unchanged. The only keyword in `src/interface/swagger.json` the flag would otherwise reach is the `pattern` on `ErrorCode` (`^[1-9]\d{3}$`).
+
+If event-sidecar later adopts FSPIOP error mapping, set `ERROR_HANDLING_AJV_JOI_PARITY=true` at that point to reproduce the 3101 (Malformed syntax) code joi returned for `enum`/`const`/`format`/`pattern` failures; without it those map to 3100 (Generic validation error).
+
 ## Auditing Dependencies
 
 We use `npm-audit-resolver` along with `npm audit` to check dependencies for node vulnerabilities, and keep track of resolved dependencies with an `audit-resolve.json` file.

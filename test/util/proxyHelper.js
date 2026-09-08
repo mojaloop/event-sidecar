@@ -1,7 +1,7 @@
 /*****
  License
  --------------
- Copyright © 2020-2025 Mojaloop Foundation
+ Copyright © 2020-2026 Mojaloop Foundation
  The Mojaloop files are made available by the Mojaloop Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
@@ -20,7 +20,7 @@
  optionally within square brackets <email>.
 
  * Mojaloop Foundation
- - Name Surname <name.surname@mojaloop.io>
+ - Juan Correa <code@juancorrea.io>
 
  * Miguel de Barros <miguel.debarros@modusbox.com>
 
@@ -32,7 +32,6 @@ const { EventEmitter } = require('events')
 const Proxyquire = require('proxyquire')
 const Path = require('path')
 const Hapi = require('@hapi/hapi')
-const HapiOpenapi = require('hapi-openapi')
 
 const eventSDK = require('@mojaloop/event-sdk')
 const Logger = require('@mojaloop/central-services-logger')
@@ -66,7 +65,6 @@ const createServerOnlyWithEventSDKProxy = (sandbox) => {
 
   const ServerProxy = Proxyquire('../../src/server', {
     '@hapi/hapi': Hapi,
-    'hapi-openapi': HapiOpenapi,
     path: Path,
     './lib/config': Config,
     '@mojaloop/event-sdk': EventSDKStub
@@ -84,11 +82,7 @@ const createServerFullProxy = (sandbox) => {
     start: sandbox.stub().resolves(),
     stop: sandbox.stub().resolves(),
     log: sandbox.stub().resolves(),
-    plugins: {
-      openapi: {
-        setHost: sandbox.spy()
-      }
-    },
+    route: sandbox.stub(),
     info: {
       port: Config.PORT
     },
@@ -97,7 +91,6 @@ const createServerFullProxy = (sandbox) => {
   const HapiStub = {
     Server: sandbox.stub().returns(ServerStub)
   }
-  const HapiOpenAPIStub = sandbox.stub()
   const PathStub = Path
   const ConfigStub = Config
 
@@ -108,7 +101,6 @@ const createServerFullProxy = (sandbox) => {
 
   const ServerProxy = Proxyquire('../../src/server', {
     '@hapi/hapi': HapiStub,
-    'hapi-openapi': HapiOpenAPIStub,
     path: PathStub,
     './lib/config': ConfigStub,
     '@mojaloop/event-sdk': EventSDKStub
@@ -116,7 +108,6 @@ const createServerFullProxy = (sandbox) => {
   return {
     ServerStub,
     HapiStub,
-    HapiOpenAPIStub,
     PathStub,
     ConfigStub,
     EventSDKStub,

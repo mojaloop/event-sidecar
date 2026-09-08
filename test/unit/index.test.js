@@ -1,6 +1,6 @@
 'use strict'
 
-const Test = require('ava')
+const Test = require('ava').default
 const Sinon = require('sinon')
 const Config = require('../../src/lib/config')
 const Proxyquire = require('proxyquire')
