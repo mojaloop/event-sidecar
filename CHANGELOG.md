@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [15.0.0](https://github.com/mojaloop/event-sidecar/compare/v14.2.3...v15.0.0) (2026-09-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate API to OpenAPI 3.0.3 and openapi-backend [mojaloop/#4479]
+
+### Features
+
+* migrate API to OpenAPI 3.0.3 and openapi-backend [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([51a67b9](https://github.com/mojaloop/event-sidecar/commit/51a67b90cd51b1ac9f804010d56346c1eafc1056))
+
+
+### Bug Fixes
+
+* clear SonarCloud Dockerfile findings on the build-deps layer [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([796c66c](https://github.com/mojaloop/event-sidecar/commit/796c66c1ed3cf423951fda407b7d64273d983e5d))
+* drop AJV type coercion and assert every operation has a handler [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([77fc633](https://github.com/mojaloop/event-sidecar/commit/77fc633d67db84d29f3aa716774bd85f8e184d85))
+* name the apk virtual package so S7018 sees a sorted list [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([a527eb8](https://github.com/mojaloop/event-sidecar/commit/a527eb8ca80f342e725926dc3041d9f48258c319))
+* skip lifecycle scripts during docker npm ci [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([bab207c](https://github.com/mojaloop/event-sidecar/commit/bab207c75baa44f5062d4ab92fa46fd82c1b04bf))
+* update js-yaml to 4.3.2 ([03de5e0](https://github.com/mojaloop/event-sidecar/commit/03de5e0ac6342dffeb63ee814a63808f25557ba3))
+* update lodash to 4.18.1 ([fd77d2c](https://github.com/mojaloop/event-sidecar/commit/fd77d2c4aeb422ef28fa376b09fba2f9df5747bb))
+
+
+### Documentation
+
+* record the ERROR_HANDLING_AJV_JOI_PARITY setting [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([ec704dd](https://github.com/mojaloop/event-sidecar/commit/ec704dd5be9f0f3ba7a4735a530d001827474603))
+
+
+### Chore
+
+* address review comments on the contributor headers ([d22a16a](https://github.com/mojaloop/event-sidecar/commit/d22a16ac981d43727536e3e2ace7e4c3de814a49)), closes [#82](https://github.com/mojaloop/event-sidecar/issues/82)
+* adopt central-services-error-handling 13.2.0 [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([b72e134](https://github.com/mojaloop/event-sidecar/commit/b72e1347806dd593194ad5fb6e9bc32e1fa28679)), closes [mojaloop/central-services-error-handling#216](https://github.com/mojaloop/central-services-error-handling/issues/216)
+* clear grype/audit findings [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([3afd4da](https://github.com/mojaloop/event-sidecar/commit/3afd4daaf7f866dd83ff62088d4a81b2dff75f2c))
+* declare OpenAPI 3.1.0 in the API document [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([d588b37](https://github.com/mojaloop/event-sidecar/commit/d588b37c7650031bf301d488bcbf99d6f0c7d793))
+* declare OpenAPI 3.2.0 in the API document [mojaloop/[#4479](https://github.com/mojaloop/event-sidecar/issues/4479)] ([2bc11cc](https://github.com/mojaloop/event-sidecar/commit/2bc11ccd3b80d686379f44a932fe5ffe4a6ea569))
+* **sbom:** update sbom [skip ci] ([3e3f25c](https://github.com/mojaloop/event-sidecar/commit/3e3f25c47c870d68b4ac3b6ef840028bead472e4))
+* update build orb to v2.1.7 ([c59e2e6](https://github.com/mojaloop/event-sidecar/commit/c59e2e6a83aeee746726a5c1900cb8883fb24eac))
+
 ### [14.2.3](https://github.com/mojaloop/event-sidecar/compare/v14.2.2...v14.2.3) (2026-03-23)
 
 
