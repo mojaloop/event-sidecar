@@ -104,7 +104,7 @@
     "@grpc/grpc-js": "1.14.4",
     "@hapi/content": "6.0.2",
     "brace-expansion": "5.0.9",
-    "js-yaml": "4.3.1",
+    "js-yaml": "4.3.2",
     "picomatch": "4.0.4",
     "uuid": "11.1.1",
     "@hapi/wreck": "18.1.2",
