@@ -58,14 +58,14 @@
     "@hapi/vision": "7.0.3",
     "@mojaloop/central-services-logger": "11.10.6",
     "@mojaloop/central-services-metrics": "12.8.8",
-    "@mojaloop/central-services-stream": "11.9.3",
+    "@mojaloop/central-services-stream": "11.10.0",
     "@mojaloop/event-sdk": "14.8.5",
     "blipp": "4.0.2",
     "commander": "15.0.0",
     "glob": "13.0.6",
     "hapi-swagger": "17.3.2",
     "mustache": "4.2.0",
-    "openapi-backend": "5.20.1",
+    "openapi-backend": "5.21.0",
     "uuid4": "2.0.3"
   },
   "devDependencies": {
@@ -108,7 +108,7 @@
     "picomatch": "4.0.4",
     "uuid": "11.1.1",
     "@hapi/wreck": "18.1.2",
-    "joi": "17.13.4",
+    "joi": "17.13.6",
     "@babel/core": "7.29.6",
     "fast-uri": "3.1.6"
   },
