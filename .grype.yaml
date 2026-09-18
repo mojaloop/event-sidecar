@@ -188,9 +188,6 @@ ignore:
     reason: >-
       Base image npm package: undici - bundled in Node.js base image, not fixable via application dependencies as of
       2026-09-18 (moderate severity)
-  - vulnerability: GHSA-gg4h-3hg2-grpc
-    include-aliases: true
-    reason: 'Unfixable npm transitive vulnerability: joi (low severity) as of 2026-09-18'
 output:
   - table
   - json
