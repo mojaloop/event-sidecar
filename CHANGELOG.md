@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [15.0.1](https://github.com/mojaloop/event-sidecar/compare/v15.0.0...v15.0.1) (2026-09-22)
+
+
+### Chore
+
+* keep the documented audit-ci allowlist and drop a dead joi ignore ([4e215ba](https://github.com/mojaloop/event-sidecar/commit/4e215ba4977b55053e3d59e0b43b4d39075081c5))
+* **sbom:** update sbom [skip ci] ([9088240](https://github.com/mojaloop/event-sidecar/commit/90882405473aae90d23cc21e4b7f402e03a743ee))
+* update dependencies and apply security patches ([7d8c771](https://github.com/mojaloop/event-sidecar/commit/7d8c77168d6005bf0e4cf693b67a3a4d74ec6897))
+
 ## [15.0.0](https://github.com/mojaloop/event-sidecar/compare/v14.2.3...v15.0.0) (2026-09-10)
 
 
